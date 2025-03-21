@@ -1,0 +1,27 @@
+# Task 1: Writing Functions: Function to greet the user
+def greet_user(name):
+    print(f"Hello, {name}! Welcome aboard.")
+
+# Function to add two numbers
+def add_numbers(a, b):
+    return a + b
+
+#output
+greet_user("Alice")
+result = add_numbers(5, 10)
+print(f"The sum of 5 and 10 is {result}.")
+
+
+#Task 2 - Using Default Parameters:Function to describe a pet
+def describe_pet(pet_name, animal_type="dog"):
+    print(f"I have a {animal_type} named {pet_name}.")
+describe_pet("Buddy")  # Uses default animal type 'dog'
+describe_pet("Whiskers", "cat")  # Overrides default animal type 'cat'
+
+#Task 3 - Functions with Variable Arguments
+#Function to make a sandwich with variable ingredients
+def make_sandwich(*ingredients):
+    print("Making a sandwich with the following ingredients:")
+    for ingredient in ingredients:
+        print(f"- {ingredient}")
+make_sandwich("Lettuce", "Tomato", "Cheese")
