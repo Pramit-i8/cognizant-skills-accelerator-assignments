@@ -1,0 +1,96 @@
+import logging
+
+# Setup logging to log errors
+logging.basicConfig(filename="error_log.txt", level=logging.ERROR)
+
+# Dictionary to hold employee data (employee_id: {name, position, salary})
+employee_db = {}
+
+# Function to add a new employee
+def add_employee():
+    try:
+        emp_id = int(input("Enter Employee ID: "))  # Employee ID must be an integer
+        name = input("Enter Employee Name: ")
+        position = input("Enter Employee Position: ")
+        salary = float(input("Enter Employee Salary: "))  # Salary must be a float
+        
+        employee_db[emp_id] = {'name': name, 'position': position, 'salary': salary}
+        print(f"Employee {name} added successfully!")
+    except ValueError as e:
+        logging.error(f"ValueError: {e}")
+        print("Invalid input! Please make sure the Employee ID and Salary are numbers.")
+
+# Function to view employee details
+def view_employee():
+    try:
+        emp_id = int(input("Enter Employee ID to view: "))
+        if emp_id in employee_db:
+            emp = employee_db[emp_id]
+            print(f"Employee ID: {emp_id}")
+            print(f"Name: {emp['name']}")
+            print(f"Position: {emp['position']}")
+            print(f"Salary: ${emp['salary']}")
+        else:
+            print("Employee not found.")
+    except ValueError as e:
+        logging.error(f"ValueError: {e}")
+        print("Invalid input! Please enter a valid Employee ID.")
+
+# Function to update an employee's details
+def update_employee():
+    try:
+        emp_id = int(input("Enter Employee ID to update: "))
+        if emp_id in employee_db:
+            print("Updating employee details...")
+            name = input("Enter new name: ")
+            position = input("Enter new position: ")
+            salary = float(input("Enter new salary: "))
+            employee_db[emp_id] = {'name': name, 'position': position, 'salary': salary}
+            print("Employee details updated successfully!")
+        else:
+            print("Employee not found.")
+    except ValueError as e:
+        logging.error(f"ValueError: {e}")
+        print("Invalid input! Please make sure the Employee ID and Salary are numbers.")
+
+# Function to delete an employee record
+def delete_employee():
+    try:
+        emp_id = int(input("Enter Employee ID to delete: "))
+        if emp_id in employee_db:
+            del employee_db[emp_id]
+            print(f"Employee {emp_id} deleted successfully!")
+        else:
+            print("Employee not found.")
+    except ValueError as e:
+        logging.error(f"ValueError: {e}")
+        print("Invalid input! Please enter a valid Employee ID.")
+
+# Main function to display menu and interact with the user
+def main():
+    while True:
+        print("\nEmployee Management System")
+        print("1. Add Employee")
+        print("2. View Employee")
+        print("3. Update Employee")
+        print("4. Delete Employee")
+        print("5. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            add_employee()
+        elif choice == '2':
+            view_employee()
+        elif choice == '3':
+            update_employee()
+        elif choice == '4':
+            delete_employee()
+        elif choice == '5':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
