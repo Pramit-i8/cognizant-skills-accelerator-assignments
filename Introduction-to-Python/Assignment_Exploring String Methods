@@ -1,0 +1,51 @@
+# Task 1: String Slicing and Indexing
+my_string = "Python is amazing!"
+
+# Slicing the first 6 characters 
+first_word = my_string[:6]
+
+# Slicing the word "amazing" 
+amazing_part = my_string[11:]
+
+# Reversing the entire string
+reversed_string = my_string[::-1]
+
+# Printing the slices with labels
+print(f"First word: {first_word}")
+print(f"Amazing part: {amazing_part}")
+print(f"Reversed string: {reversed_string}")
+
+
+# Task 2: String Methods
+my_string = " hello, python world! "
+
+# strip() to remove extra spaces
+stripped_string = my_string.strip()
+
+# to capitalize the first letter
+capitalized_string = my_string.capitalize()
+
+# to replace "world" with "universe"
+replaced_string = my_string.replace("world", "universe")
+
+# convert the string to uppercase
+uppercased_string = my_string.upper()
+
+# output
+print(f"Stripped: '{stripped_string}'")
+print(f"Capitalized: '{capitalized_string}'")
+print(f"Replaced: '{replaced_string}'")
+print(f"Uppercase: '{uppercased_string}'")
+
+
+# Task 3: Check for Palindromes
+user_input = input("Enter a word: ")
+
+# Reverse the string using slicing
+reversed_input = user_input[::-1]
+
+# Check if the word is a palindrome
+if user_input == reversed_input:
+    print(f"Yes, '{user_input}' is a palindrome!")
+else:
+    print(f"No, '{user_input}' is not a palindrome.")
