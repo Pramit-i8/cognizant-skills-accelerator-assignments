@@ -1,0 +1,77 @@
+#Project 1: Exploring Tokenization and Embeddings
+
+from transformers import GPT2Tokenizer
+from transformers import BertTokenizer, BertModel
+import torch
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+text = "In a world full of noise, silence can be the most powerful tool for clarity."
+tokens = tokenizer.tokenize(text)
+print("Tokens:", tokens)
+
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = BertModel.from_pretrained('bert-base-uncased')
+
+inputs = tokenizer("In a world full of noise", return_tensors='pt')
+outputs = model(**inputs)
+embeddings = outputs.last_hidden_state
+
+# Reduce the dimensionality of the embeddings using PCA
+pca = PCA(n_components=2)
+reduced_embeddings = pca.fit_transform(embeddings.detach().numpy().flatten().reshape(-1, 1))
+
+# Plotting the embeddings in 2D space
+plt.scatter(reduced_embeddings[:, 0], reduced_embeddings[:, 1])
+plt.title('PCA Visualization of Embeddings')
+plt.show()
+
+#Project 2: Crafting the Perfect Prompt
+import openai
+
+openai.api_key = 'your-openai-api-key'
+
+prompt = "Summarize the article about renewable energy and its economic impact."
+
+response = openai.Completion.create(
+  engine="text-davinci-003",
+  prompt=prompt,
+  max_tokens=100
+)
+print(response.choices[0].text.strip())
+
+#Project 3: Building a Mini Application
+import streamlit as st
+import openai
+
+openai.api_key = 'your-openai-api-key'
+
+def get_response(query):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=query,
+        max_tokens=100
+    )
+    return response.choices[0].text.strip()
+
+st.title("FAQ Assistant")
+user_input = st.text_input("Ask a question:")
+if user_input:
+    answer = get_response(user_input)
+    st.write(answer)
+
+#Project 4: Advanced Prompt Techniques
+import openai
+
+openai.api_key = 'your-openai-api-key'
+
+prompt = "Write a poem in the style of Shakespeare. For example: 'Shall I compare thee to a summer's day?' Now, write a poem about love in the same style."
+
+response = openai.Completion.create(
+  engine="text-davinci-003",
+  prompt=prompt,
+  max_tokens=100
+)
+print(response.choices[0].text.strip())
+
