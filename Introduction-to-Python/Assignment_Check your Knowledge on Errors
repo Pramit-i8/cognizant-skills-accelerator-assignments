@@ -1,0 +1,53 @@
+# Task 1: Understanding Python Exceptions
+# Handle different exceptions when dividing 100 by user input
+
+try:
+    number = float(input("Enter a number: "))  # Prompt user for a number and try to convert to float
+    result = 100 / number  # Try to divide 100 by the entered number
+except ZeroDivisionError:
+    print("Oops! You cannot divide by zero.")  # Handle division by zero
+except ValueError:
+    print("Invalid input! Please enter a valid number.")  # Handle invalid numeric input
+else:
+    print(f"100 divided by {number} is {result}")  
+
+
+# Task 2: Types of Exceptions
+# Raise and handle IndexError, KeyError, and TypeError
+
+# Handle IndexError by accessing an invalid list index
+my_list = [1, 2, 3]
+try:
+    print(my_list[5])  # Attempting to access an invalid index (out of range)
+except IndexError:
+    print("IndexError occurred! List index out of range.")
+
+# Handle KeyError by accessing a non-existent key in a dictionary
+my_dict = {"name": "Alice", "age": 25}
+try:
+    print(my_dict["gender"])  # Attempting to access a non-existent key
+except KeyError:
+    print("KeyError occurred! Key not found in the dictionary.")
+
+# Handle TypeError by adding a string and an integer
+try:
+    result = "Hello" + 5  # Attempting to add a string and an integer
+except TypeError:
+    print("TypeError occurred! Unsupported operand types.")
+
+
+# Task 3: Using Try...except...else...finally for division and closing message
+
+try:
+    num1 = float(input("Enter the first number: "))  # Get the first number from the user
+    num2 = float(input("Enter the second number: "))  # Get the second number from the user
+    result = num1 / num2  # Try to divide the numbers
+except ZeroDivisionError:
+    print("Oops! You cannot divide by zero.")  # Handle division by zero
+except ValueError:
+    print("Invalid input! Please enter valid numbers.")  # Handle invalid numeric input
+else:
+    print(f"The result is {result}")  # If no exception, print the result
+finally:
+    print("This block always executes.")  # The finally block always executes
+
