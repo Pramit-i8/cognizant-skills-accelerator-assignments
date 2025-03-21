@@ -1,0 +1,103 @@
+Part 1: Theory of Fine-Tuning
+
+1. What is the main benefit of fine-tuning an LLM?
+
+It customizes the model for specific tasks or domains.
+
+
+2. Which of the following describes "catastrophic forgetting"?
+
+Answer: When the model loses its generalization ability after excessive fine-tuning on a specific task.
+
+
+
+Application Task
+Explanation of Transfer Learning Using a Real-World Analogy:
+
+Transfer learning is similar to how a person might leverage knowledge from a general field to perform a specialized job. For example, imagine someone who has been trained as a general mechanic. This person has a broad understanding of vehicle repair, but they want to specialize in repairing high-end sports cars. Instead of learning everything from scratch, they transfer their general knowledge and then fine-tune it by learning about the specific parts and technologies used in sports cars.
+
+Similarly, in machine learning, a model trained on a vast dataset learns general patterns. Transfer learning allows the model to apply this knowledge to a new, related task by fine-tuning it with a smaller, specialized dataset. For instance, in healthcare, a model trained on a large corpus of medical texts can be fine-tuned with a dataset containing specific types of medical records (e.g., diagnosing heart disease), allowing the model to perform well on this specialized task.
+
+Part 2: Practical Fine-Tuning Session
+Hands-On Coding Task: Fine-Tuning the DistilBERT Model
+
+1. Environment Setup:
+
+bash
+Copy
+!pip install transformers datasets torch
+!pip install -U sentencepiece  # For certain tokenizers
+To verify GPU availability (if you are using a GPU):
+
+python
+Copy
+import torch
+print(torch.cuda.is_available())  # Should return True if GPU is available
+2. Preprocessing Data:
+
+Load the IMDB dataset and preprocess it for tokenization:
+
+python
+Copy
+from datasets import load_dataset
+from transformers import DistilBertTokenizer
+
+# Load IMDB dataset
+dataset = load_dataset('imdb')
+
+# Initialize tokenizer
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+
+# Tokenize the dataset
+def tokenize_function(examples):
+    return tokenizer(examples['text'], padding='max_length', truncation=True)
+
+# Apply tokenization
+tokenized_datasets = dataset.map(tokenize_function, batched=True)
+
+# Print tokenized dataset sample
+print(tokenized_datasets['train'][0])
+3. Model Training:
+
+Define the training arguments and fine-tune the model using Hugging Face's Trainer API:
+
+python
+Copy
+from transformers import DistilBertForSequenceClassification, Trainer, TrainingArguments
+
+# Load pre-trained model for sequence classification
+model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2)
+
+# Define training arguments
+training_args = TrainingArguments(
+    output_dir='./results',          # output directory
+    evaluation_strategy="epoch",     # evaluation frequency
+    learning_rate=2e-5,              # learning rate
+    per_device_train_batch_size=8,   # batch size for training
+    per_device_eval_batch_size=8,    # batch size for evaluation
+    num_train_epochs=3,              # number of training epochs
+    weight_decay=0.01,               # strength of weight decay
+)
+
+# Initialize Trainer
+trainer = Trainer(
+    model=model,                         # the pre-trained model
+    args=training_args,                  # training arguments
+    train_dataset=tokenized_datasets['train'],  # training dataset
+    eval_dataset=tokenized_datasets['test'],   # evaluation dataset
+)
+
+# Start training
+trainer.train()
+4. Save and Evaluate:
+
+After training, you can save the model and evaluate its performance:
+
+python
+Copy
+# Save the fine-tuned model
+model.save_pretrained("./fine_tuned_distilbert")
+
+# Evaluate the model on the test dataset
+eval_result = trainer.evaluate()
+print(eval_result)
