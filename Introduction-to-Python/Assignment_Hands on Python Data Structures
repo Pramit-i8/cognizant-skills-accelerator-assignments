@@ -1,0 +1,55 @@
+# Task 1: Working with Lists
+
+# Create a list of favorite fruits
+fruits = ['apple', 'banana', 'cherry', 'date', 'elderberry']
+# Print the original list
+print("Original list:", fruits)
+
+# Append a new fruit to the list
+fruits.append('fig')
+print("After adding a fruit:", fruits)
+
+# Remove one fruit 
+fruits.remove('apple')
+print("After removing a fruit:", fruits)
+
+# Print the list in reverse order usbying slicing
+reversed_fruits = fruits[::-1]
+print("Reversed list:", reversed_fruits)
+
+
+# Task 2: Exploring Dictionaries
+# Create a dictionary with personal information
+person_info = {
+    "name": "Alice",
+    "age": 25,
+    "city": "New York"
+}
+
+# Add a new key-value pair for favorite color
+person_info["favorite color"] = "Blue"
+
+# Update with a new value
+person_info["city"] = "Los Angeles"
+
+# Print all keys and values using a loop
+print("Keys:", ", ".join(person_info.keys()))
+print("Values:", ", ".join(str(value) for value in person_info.values()))
+
+
+
+# Task 3: Using Tuples
+# Create a tuple with favorite movie, song, and book
+favorite_things = ('Inception', 'Bohemian Rhapsody', '1984')
+
+# Print the tuple
+print("Favorite things:", favorite_things)
+
+# Try to change one of the elements (this will raise an error)
+try:
+    favorite_things[0] = 'The Matrix'  # Tuples are immutable
+except TypeError as e:
+    print("Oops! Tuples cannot be changed.")
+
+# Print the length of the tuple using len()
+print("Length of tuple:", len(favorite_things))

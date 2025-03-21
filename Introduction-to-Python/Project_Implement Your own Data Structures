@@ -1,0 +1,92 @@
+#First we gotta create the Inventory
+inventory = {
+    "apple": (10, 2.5),  # Key: Item, Value: (Quantity, Price)
+    "banana": (20, 1.2)
+}
+
+# Function to display the inventory in a friendly format
+def display_inventory(inventory):
+    print("Current Inventory:")
+    for item, (quantity, price) in inventory.items():
+        print(f"Item: {item}, Quantity: {quantity}, Price: ${price}")
+
+# Add, Remove, and Update Items
+def add_item(inventory):
+    item = input("Enter the name of the item you want to add: ").lower()
+    quantity = int(input(f"Enter the quantity of {item}: "))
+    price = float(input(f"Enter the price of {item}: "))
+    inventory[item] = (quantity, price)
+    print(f"Item '{item}' added to inventory.")
+
+def remove_item(inventory):
+    item = input("Enter the name of the item you want to remove: ").lower()
+    if item in inventory:
+        del inventory[item]
+        print(f"Item '{item}' removed from inventory.")
+    else:
+        print(f"Item '{item}' not found in inventory.")
+
+def update_item(inventory):
+    item = input("Enter the name of the item you want to update: ").lower()
+    if item in inventory:
+        option = input("Do you want to update quantity (q) or price (p)? ").lower()
+        if option == "q":
+            new_quantity = int(input(f"Enter the new quantity of {item}: "))
+            inventory[item] = (new_quantity, inventory[item][1])  # Update only the quantity
+            print(f"Quantity of '{item}' updated to {new_quantity}.")
+        elif option == "p":
+            new_price = float(input(f"Enter the new price of {item}: "))
+            inventory[item] = (inventory[item][0], new_price)  # Update only the price
+            print(f"Price of '{item}' updated to ${new_price}.")
+        else:
+            print("Invalid option. Please select 'q' for quantity or 'p' for price.")
+    else:
+        print(f"Item '{item}' not found in inventory.")
+
+# Display the Inventory
+def show_inventory(inventory):
+    display_inventory(inventory)
+
+# Bonus - Calculate Total Value of Inventory
+def calculate_total_value(inventory):
+    total_value = 0
+    for quantity, price in inventory.values():
+        total_value += quantity * price
+    print(f"Total value of inventory: ${total_value:.2f}")
+
+# Main function for interactive program
+def main():
+    print("Welcome to the Inventory Manager!\n")
+
+    # Display current inventory
+    show_inventory(inventory)
+
+    while True:
+        print("\nWhat would you like to do?")
+        print("1. Add a new item")
+        print("2. Remove an item")
+        print("3. Update an item")
+        print("4. View inventory")
+        print("5. Calculate total inventory value")
+        print("6. Exit")
+
+        choice = input("Enter the number of your choice: ")
+
+        if choice == '1':
+            add_item(inventory)
+        elif choice == '2':
+            remove_item(inventory)
+        elif choice == '3':
+            update_item(inventory)
+        elif choice == '4':
+            show_inventory(inventory)
+        elif choice == '5':
+            calculate_total_value(inventory)
+        elif choice == '6':
+            print("Exiting the Inventory Manager. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
